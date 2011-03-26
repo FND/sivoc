@@ -1,5 +1,7 @@
 import itertools
 
+import serialization.text
+
 from web.util import HTTP
 from store import STORE
 
@@ -16,11 +18,16 @@ def get_root(environ, start_response):
 def list_concepts(environ, start_response):
     concepts = STORE.concepts.items()
 
-    status = '200' if len(concepts) > 0 else '404' # TODO: raise 404 as exception (cf. TiddlyWeb)
+    if len(concepts) > 0: # XXX: checking length kinda defeats the purpose of using generators
+        status = '200'
+    else:
+        status = '404' # TODO: raise 404 as exception (cf. TiddlyWeb)
+
     response_headers = [('Content-Type', 'text/plain')]
     start_response(HTTP[status], response_headers)
 
-    return ("%s\n" % concept.label().name for _id, concept in concepts)
+    concepts = (concept for _id, concept in concepts)
+    return serialization.text.list_concepts(concepts)
 
 
 def get_concept(environ, start_response):
@@ -35,7 +42,4 @@ def get_concept(environ, start_response):
 
     start_response(HTTP[status], response_headers)
 
-    labels = itertools.chain(concept.pref_labels, ["separator"], # XXX: use of separator hacky
-            concept.alt_labels)
-
-    return ("%s\n" % getattr(label, "name", "") for label in labels)
+    return serialization.text.show_concept(concept)
