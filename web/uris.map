@@ -1,2 +1,8 @@
 /
 	GET web.handlers:get_root
+
+/concepts
+	GET web.handlers:list_concepts
+
+/concepts/{id}
+	GET web.handlers:get_concept
