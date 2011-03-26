@@ -1,8 +1,8 @@
 import httplib
 
 
-# dictionary indexing HTTP responses (code plus reason phrase) by code
-HTTP = dict((code, "%s %s" % (code, httplib.responses[code]))
+# dictionary of canonical HTTP responses (status code plus reason phrase)
+HTTP = dict((str(code), "%s %s" % (code, httplib.responses[code]))
         for code in httplib.responses)
 
 
