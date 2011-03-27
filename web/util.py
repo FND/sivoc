@@ -2,7 +2,7 @@ import httplib
 
 
 # dictionary of canonical HTTP responses (status code plus reason phrase)
-HTTP = dict((str(code), "%s %s" % (code, httplib.responses[code]))
+HTTP = dict((str(code), '%s %s' % (code, httplib.responses[code]))
         for code in httplib.responses)
 
 

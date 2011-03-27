@@ -19,7 +19,7 @@ class Negotiate(object):
         accept_header = environ.get('HTTP_ACCEPT')
         content_type = environ.get('CONTENT_TYPE')
 
-        if method == "GET":
+        if method == 'GET':
             return mimeparse.best_match(self.types_available, accept_header)
         elif content_type:
             return content_type.split(';')[0]
@@ -42,8 +42,8 @@ class UTF8_Encoder(object):
             add charset to Content-Type header if necessary
             """
             for i, header in enumerate(headers):
-                if header[0].lower() == "content-type" and ";" not in header[1]:
-                    headers[i] = (header[0], "%s; charset=utf-8" % header[1])
+                if header[0].lower() == 'content-type' and ';' not in header[1]:
+                    headers[i] = (header[0], '%s; charset=utf-8' % header[1])
             return start_response(status, headers, exc_info)
 
         for chunk in self.app(environ, _start_response):
