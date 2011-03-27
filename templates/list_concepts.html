@@ -1,0 +1,7 @@
+<ul>
+	{% for concept in concepts %}
+	<li>
+		<a href="{{ concept['uri'] }}">{{ concept['label'] }}</a>
+	</li>
+	{% endfor %}
+</ul>

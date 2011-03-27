@@ -1,0 +1,20 @@
+<dl>
+	<dt>ID</dt>
+	<dd>{{ concept._id }}</dd>
+
+	<dt>Preferred Labels</dt>
+	{% for label in concept.pref_labels %}
+	<dd>
+		{{ label.name }}
+		<span class="language">[{{ label.lang }}]</span>
+	</dd>
+	{% endfor %}
+
+	<dt>Alternative Labels</dt>
+	{% for label in concept.alt_labels %}
+	<dd>
+		{{ label.name }}
+		<span class="language">[{{ label.lang }}]</span>
+	</dd>
+	{% endfor %}
+</dl>
