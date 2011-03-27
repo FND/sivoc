@@ -14,10 +14,15 @@ def list_concepts(concepts):
 
     concepts_data = (template_data(concept) for concept in concepts) # XXX: unnecessarily complex?
 
-    template = ENV.get_template('list_concepts.html')
-    return template.generate(concepts=concepts_data)
+    return _render('list_concepts.html', title='Concepts',
+            concepts=concepts_data)
 
 
 def show_concept(concept): # TODO: i18n
-    template = ENV.get_template('show_concept.html')
-    return template.generate(concept=concept)
+    return _render('show_concept.html', title=concept.label(), concept=concept)
+
+
+
+def _render(template, **kwargs):
+    template = ENV.get_template(template)
+    return template.generate(**kwargs)
