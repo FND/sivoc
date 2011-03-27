@@ -1,10 +1,6 @@
 def list_concepts(concepts):
     for concept in concepts:
-        label = concept.label()
-        try:
-            yield '%s\n' % label.name
-        except AttributeError: # ID
-            yield '%s\n' % label
+        yield '%s\n' % concept.label()
 
 
 def show_concept(concept):

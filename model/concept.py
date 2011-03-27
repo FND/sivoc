@@ -9,7 +9,10 @@ class Concept(object):
         return self.label() + object.__repr__(self)
 
     def label(self): # XXX: ambiguous; rename?
+        """
+        returns primary text representation (preferred label)
+        """
         try:
-            return self.pref_labels[0] # TODO: use current locale
+            return self.pref_labels[0].name # TODO: use current locale
         except IndexError:
             return self._id
