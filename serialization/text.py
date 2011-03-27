@@ -4,16 +4,14 @@ def list_concepts(concepts):
 
 
 def show_concept(concept):
+    yield '%s\n' % concept._id
+
     line = '    [%s] %s\n'
 
-    yield '%s\n\n' % concept._id
-
-    yield 'PREFERRED LABELS\n'
+    yield '\nPREFERRED LABELS\n'
     for label in concept.pref_labels:
         yield line % (label.lang, label.name)
 
-    yield '\n'
-
-    yield 'ALTERNATIVE LABELS\n'
+    yield '\nALTERNATIVE LABELS\n'
     for label in concept.alt_labels:
         yield line % (label.lang, label.name)
