@@ -1,6 +1,7 @@
 from model.concept import Concept
 from model.label import Label
 
+
 _data = {
     "concepts": {
         "01": {
@@ -18,7 +19,7 @@ _data = {
         2: { "lang": "de", "name": "Sonne" },
         3: { "lang": "la", "name": "terra" },
         4: { "lang": "en", "name": "earth" },
-        5: { "lang": "de", "name": "Erde" },
+        5: { "lang": "de", "name": "Erde" }
     }
 }
 
@@ -30,7 +31,7 @@ class Store(object):
         self.labels = labels or {}
 
 
-def load(data):
+def _load(data):
     labels = {}
     for _id, label in data["labels"].items():
         labels[_id] = Label(label["name"], label["lang"])
@@ -47,4 +48,4 @@ def load(data):
     return Store(concepts, labels)
 
 
-STORE = load(_data)
+STORE = _load(_data)
