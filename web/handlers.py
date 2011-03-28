@@ -3,7 +3,7 @@ import itertools
 
 import serialization.text
 
-from web.util import HTTP
+from web.http import HTTP, HTTP404
 from config import CONFIG
 from store import STORE
 
@@ -19,32 +19,31 @@ def get_root(environ, start_response):
 
 def list_concepts(environ, start_response):
     concepts = STORE.concepts.items()
-    content_type = environ['wsgi.accepted_type']
 
     if len(concepts) > 0: # XXX: checking length kinda defeats the purpose of using generators
-        status = '200'
         concepts = (concept for _id, concept in concepts)
     else:
-        status = '404' # TODO: raise 404 as exception (cf. TiddlyWeb)
+        raise HTTP404('no concepts available')
+
+    content_type = environ['wsgi.accepted_type']
 
     response_headers = [('Content-Type', content_type)]
-    start_response(HTTP[status], response_headers)
+    start_response(HTTP['200'], response_headers)
 
     return _serializer(content_type).list_concepts(concepts)
 
 
 def get_concept(environ, start_response):
-    content_type = environ['wsgi.accepted_type']
-
     _id = environ['wsgiorg.routing_args'][1]['id']
     try:
         concept = STORE.concepts[_id]
-        status = '200'
-    except IndexError:
-        status = '404' # TODO: raise 404 as exception (cf. TiddlyWeb)
+    except KeyError, exc:
+        raise HTTP404('no such concept')
+
+    content_type = environ['wsgi.accepted_type']
 
     response_headers = [('Content-Type', content_type)]
-    start_response(HTTP[status], response_headers)
+    start_response(HTTP['200'], response_headers)
 
     return _serializer(content_type).show_concept(concept)
 

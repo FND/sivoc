@@ -31,7 +31,7 @@ def main(args):
 def _get_item(indexable, index, default):
     try:
         return indexable[index]
-    except IndexError:
+    except IndexError, exc:
         return default
 
 

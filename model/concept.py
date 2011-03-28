@@ -14,5 +14,5 @@ class Concept(object):
         """
         try:
             return self.pref_labels[0].name # TODO: use current locale
-        except IndexError:
+        except IndexError, exc:
             return self._id

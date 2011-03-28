@@ -1,5 +1,7 @@
 import mimeparse
 
+from http import HTTP, HTTPException
+
 
 class Negotiate(object):
     """
@@ -10,7 +12,7 @@ class Negotiate(object):
         self.types_available = types_available # XXX: rename!?
         self.app = app
 
-    def __call__(self, environ, start_response):
+    def __call__(self, environ, start_response, exc_info=None):
         environ['wsgi.accepted_type'] = self._determine(environ) # XXX: bad key?
         return self.app(environ, start_response)
 
@@ -27,6 +29,22 @@ class Negotiate(object):
             return None
 
 
+class HTTPExceptor(object):
+    """
+    extend WSGI environment with information from simple content negotiation
+    """
+
+    def __init__(self, app):
+        self.app = app
+
+    def __call__(self, environ, start_response, exc_info=None):
+        try:
+            return self.app(environ, start_response)
+        except HTTPException, exc:
+            start_response(HTTP[exc.status], exc.headers(), exc_info)
+            return exc.output()
+
+
 class UTF8_Encoder(object):
     """
     ensure that outgoing content is UTF-8
@@ -35,7 +53,7 @@ class UTF8_Encoder(object):
     def __init__(self, app):
         self.app = app
 
-    def __call__(self, environ, start_response):
+    def __call__(self, environ, start_response, exc_info=None):
 
         def _start_response(status, headers, exc_info=None):
             """
@@ -49,5 +67,5 @@ class UTF8_Encoder(object):
         for chunk in self.app(environ, _start_response):
             try:
                 yield chunk.encode('utf-8')
-            except UnicodeDecodeError:
+            except UnicodeDecodeError, exc:
                 yield chunk

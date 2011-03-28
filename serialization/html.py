@@ -22,7 +22,6 @@ def show_concept(concept): # TODO: i18n
     return _render('show_concept.html', title=concept.label(), concept=concept)
 
 
-
 def _render(template, **kwargs):
     template = ENV.get_template(template)
     return template.generate(**kwargs)
