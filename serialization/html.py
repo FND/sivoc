@@ -1,7 +1,4 @@
-import jinja2
-
-
-ENV = jinja2.Environment(loader=jinja2.FileSystemLoader('templates')) # XXX: use PackageLoader?
+from templates import ENV
 
 
 def list_concepts(concepts):
