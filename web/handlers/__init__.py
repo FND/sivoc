@@ -8,12 +8,6 @@ from config import CONFIG
 from store import STORE
 
 
-def get_root(environ, start_response):
-    response_headers = [('Content-Type', 'text/plain')]
-    start_response(HTTP['200'], response_headers)
-    return ('Welcome.',)
-
-
 def list_concepts(environ, start_response):
     concepts = STORE.concepts.items()
 

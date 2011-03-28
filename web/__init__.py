@@ -7,7 +7,6 @@ import os
 from selector import Selector
 
 from web.middleware import Negotiate, HTTPExceptor, UTF8_Encoder
-from web.handlers import get_root
 from config import CONFIG
 
 

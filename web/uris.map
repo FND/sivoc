@@ -1,5 +1,5 @@
 /
-	GET web.handlers:get_root
+	GET web.handlers.root:get_root
 
 /conceptcreator
 	GET web.handlers.conceptcreator:get_creator
