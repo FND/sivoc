@@ -31,7 +31,7 @@ def list_concepts(environ, start_response):
 
 
 def get_concept(environ, start_response):
-    _id = environ['wsgiorg.routing_args'][1]['id']
+    _id = int(environ['wsgiorg.routing_args'][1]['id'])
     try:
         concept = STORE.concepts[_id]
     except KeyError, exc:

@@ -1,7 +1,7 @@
 class Concept(object):
 
-    def __init__(self, _id, pref_labels=None, alt_labels=None):
-        self._id = _id
+    def __init__(self, _id=None, pref_labels=None, alt_labels=None):
+        self._id = _id # None if not (yet) persisted
         self.pref_labels = pref_labels or []
         self.alt_labels = alt_labels or []
 

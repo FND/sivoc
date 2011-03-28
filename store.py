@@ -4,11 +4,11 @@ from model.label import Label
 
 _data = {
     'concepts': {
-        '01': {
+        0: {
             'pref': 0,
             'alt': [1, 2]
         },
-        '02': {
+        1: {
             'pref': 3,
             'alt': [4, 5]
         }
@@ -29,6 +29,19 @@ class Store(object):
     def __init__(self, concepts=None, labels=None):
         self.concepts = concepts or {}
         self.labels = labels or {}
+
+    def add(self, entity):
+        entity_type = entity.__class__.__name__.lower()
+        collection = getattr(self, "%ss" % entity_type)
+
+        # generate ID
+        _id = 1
+        while _id in collection.keys():
+            _id += 1
+
+        collection[_id] = entity
+        entity._id = _id
+        return _id
 
 
 def _load(data):

@@ -5,7 +5,7 @@ def list_concepts(concepts):
 
     def template_data(concept):
         return {
-            'uri': 'concepts/' + concept._id,
+            'uri': 'concepts/%s' % concept._id,
             'label': concept.label()
         }
 
