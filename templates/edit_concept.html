@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form action="{{ form_uri }}" method="post">
+	<fieldset>
+		<legend>Preferred Labels</legend>
+		{% for label in concept.pref_labels %}
+		<input type="text" name="pref_labels" value="{{ label.name }}">
+		{% endfor %}
+		<input type="text" name="pref_labels">
+	</fieldset>
+	<fieldset>
+		<legend>Alternative Labels</legend>
+		{% for label in concept.alt_labels %}
+		<input type="text" name="alt_labels" value="{{ label.name }}">
+		{% endfor %}
+		<input type="text" name="alt_labels">
+		<input type="text" name="alt_labels">
+	</fieldset>
+	<input type="submit">
+</form>
+{% endblock %}

@@ -31,3 +31,7 @@ class HTTPException(Exception):
 
 class HTTP404(HTTPException):
     status = '404'
+
+
+class HTTP415(HTTPException):
+    status = '415'

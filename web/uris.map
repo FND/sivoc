@@ -1,6 +1,10 @@
 /
 	GET web.handlers:get_root
 
+/conceptcreator
+	GET web.handlers:get_conceptcreator
+	POST web.handlers:post_conceptcreator
+
 /concepts
 	GET web.handlers:list_concepts
 
