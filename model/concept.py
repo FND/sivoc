@@ -8,6 +8,17 @@ class Concept(object):
     def __repr__(self):
         return self.label() + object.__repr__(self)
 
+    def data(self):
+        """
+        returns a dictionary representing the instance's data
+        """
+        return {
+            'labels': {
+                'pref': [label.data() for label in self.pref_labels],
+                'alt': [label.data() for label in self.alt_labels]
+            }
+        }
+
     def label(self): # XXX: ambiguous; rename?
         """
         returns primary text representation (preferred label)

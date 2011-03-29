@@ -3,18 +3,15 @@ import itertools
 
 import serialization.text
 
+from bson.objectid import ObjectId # XXX: is this really required? (breaks encapsulation)
+
 from web.http import HTTP, HTTP404
 from config import CONFIG
 from store import STORE
 
 
 def list_concepts(environ, start_response):
-    concepts = STORE.concepts.items()
-
-    if len(concepts) > 0: # XXX: checking length kinda defeats the purpose of using generators
-        concepts = (concept for _id, concept in concepts)
-    else:
-        raise HTTP404('no concepts available')
+    concepts = STORE.retrieve('concepts')
 
     content_type = environ['wsgi.accepted_type']
 
@@ -25,10 +22,12 @@ def list_concepts(environ, start_response):
 
 
 def get_concept(environ, start_response):
-    _id = int(environ['wsgiorg.routing_args'][1]['id'])
-    try:
-        concept = STORE.concepts[_id]
-    except KeyError, exc:
+    _id = environ['wsgiorg.routing_args'][1]['id']
+
+    concepts = STORE.retrieve('concepts', { '_id': ObjectId(_id) })
+    concept = list(concepts)[0] # XXX: not particularly elegant
+
+    if not concept:
         raise HTTP404('no such concept')
 
     content_type = environ['wsgi.accepted_type']

@@ -1,0 +1,15 @@
+[
+	{
+		"pref": { "lang": "la", "name": "terra" },
+		"alt": [
+			{ "lang": "en", "name": "sun" },
+			{ "lang": "de", "name": "Sonne" }
+		]
+	}, {
+		"pref": { "lang": "la", "name": "sol" },
+		"alt": [
+			{ "lang": "en", "name": "earth" },
+			{ "lang": "de", "name": "Erde" }
+		]
+	}
+]

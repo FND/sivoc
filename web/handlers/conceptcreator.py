@@ -30,7 +30,7 @@ def post_creator(environ, start_response):
 
     concept = Concept()
     # TODO: label language (input/selection currently missing from HTML template)
-    for label_type in ["pref", "alt"]:
+    for label_type in ['pref', 'alt']:
         key = '%s_labels' % label_type
         for name in data[key]:
             if name:
