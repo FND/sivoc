@@ -1,0 +1,10 @@
+Dependencies
+============
+
+* selector
+* mimeparse
+* jinja2
+
+Developers Only
+---------------
+* py.test
