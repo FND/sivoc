@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block nav %}
+<a href="{{ root_uri }}">Home</a>
+{% endblock %}
+
+{% block body %}
+<ul>
+	{% for label in labels %}
+	<li>
+		{{ label.name }}
+		<span class="language">[{{ label.lang }}]</span>
+	</li>
+	{% endfor %}
+</ul>
+{% endblock %}

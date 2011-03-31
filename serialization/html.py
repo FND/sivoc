@@ -5,7 +5,7 @@ def list_concepts(concepts):
 
     def template_data(concept):
         return {
-            'uri': 'concepts/%s' % concept._id,
+            'uri': 'concepts/%s' % concept._id, # XXX: URI hardcoded; breaks encapsulation
             'label': concept.label()
         }
 
@@ -13,6 +13,11 @@ def list_concepts(concepts):
 
     return _render('list_concepts.html', title='Concepts',
             concepts=concepts_data, root_uri='/') # XXX: root_uri hardcoded; breaks encapsulation
+
+
+def list_labels(labels):
+    return _render('list_labels.html', title='Labels', labels=labels,
+            root_uri='/') # XXX: root_uri hardcoded; breaks encapsulation
 
 
 def show_concept(concept): # TODO: i18n

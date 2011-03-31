@@ -21,13 +21,18 @@ class Store(object): # XXX: use MongoKit or MongoEngine instead?
     def __init__(self, host, port, database):
         self.db = getattr(Connection(host, port), database)
 
-    def retrieve(self, collection, query=None):
+    def retrieve(self, collection, *args, **kwargs):
+        """
+        collection argument is a string, remaining arguments are passed through
+        to PyMongo's `find` method
+        """
         if collection not in self.collections.values():
             raise ValueError('invalid collection')
 
         # XXX: hard-coding concepts for now
+        # XXX: association with models is dangerous also because we might query only for a limited selection of fields
         return (Concept().from_document(doc)
-                for doc in getattr(self.db, collection).find(query))
+                for doc in getattr(self.db, collection).find(*args, **kwargs))
 
     def add(self, entity):
         """

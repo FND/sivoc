@@ -10,3 +10,6 @@
 
 /concepts/{id}
 	GET web.handlers:get_concept
+
+/labels
+	GET web.handlers:list_labels
