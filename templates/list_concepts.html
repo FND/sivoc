@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block nav %}
+<a href="{{ root_uri }}">Home</a>
+{% endblock %}
+
 {% block body %}
 <ul>
 	{% for concept in concepts %}

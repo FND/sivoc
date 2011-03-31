@@ -12,11 +12,12 @@ def list_concepts(concepts):
     concepts_data = (template_data(concept) for concept in concepts) # XXX: unnecessarily complex?
 
     return _render('list_concepts.html', title='Concepts',
-            concepts=concepts_data)
+            concepts=concepts_data, root_uri='/') # XXX: root_uri hardcoded; breaks encapsulation
 
 
 def show_concept(concept): # TODO: i18n
-    return _render('show_concept.html', title=concept.label(), concept=concept)
+    return _render('show_concept.html', title=concept.label(), concept=concept,
+            concepts_uri='/concepts') # XXX: concepts_uri hardcoded; breaks encapsulation
 
 
 def _render(template, **kwargs):

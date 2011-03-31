@@ -15,6 +15,7 @@ def get_creator(environ, start_response):
     start_response(HTTP['200'], response_headers)
     template = ENV.get_template('edit_concept.html')
     return template.generate(title='Concept Creator', concept=Concept(),
+            root_uri='/', # XXX: root_uri hardcoded; breaks encapsulation
             form_uri=environ['SCRIPT_NAME']) # XXX: SCRIPT_NAME correct?
 
 

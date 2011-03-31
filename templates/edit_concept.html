@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block nav %}
+<a href="{{ root_uri }}">Home</a>
+{% endblock %}
+
 {% block body %}
 <form action="{{ form_uri }}" method="post">
 	<fieldset>
