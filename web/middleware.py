@@ -13,7 +13,7 @@ class Negotiate(object):
         self.app = app
 
     def __call__(self, environ, start_response, exc_info=None):
-        environ['wsgi.accepted_type'] = self._determine(environ) # XXX: bad key?
+        environ['wsgi.accepted_type'] = self._determine(environ) # XXX: bad key? (could also use incoming_type, for GET only)
         return self.app(environ, start_response)
 
     def _determine(self, environ): # XXX: rename? -- XXX: overly simplistic? (cf. tiddlyweb.web.negotiate)

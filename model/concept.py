@@ -6,18 +6,10 @@ class Concept(object):
         self.alt_labels = alt_labels or []
 
     def __repr__(self):
-        return self.label() + object.__repr__(self)
-
-    def data(self):
-        """
-        returns a dictionary representing the instance's data
-        """
-        return {
-            'labels': {
-                'pref': [label.data() for label in self.pref_labels],
-                'alt': [label.data() for label in self.alt_labels]
-            }
-        }
+        try:
+            return self.label() + object.__repr__(self)
+        except TypeError, exc:
+            return object.__repr__(self)
 
     def label(self): # XXX: ambiguous; rename?
         """
@@ -27,3 +19,26 @@ class Concept(object):
             return self.pref_labels[0].name # TODO: use current locale
         except IndexError, exc:
             return self._id
+
+    def as_document(self):
+        """
+        returns a dictionary representing the instance's data
+        """
+        labels = {
+            'pref': [label.as_document() for label in self.pref_labels],
+            'alt': [label.as_document() for label in self.alt_labels]
+        }
+        return { 'labels': labels }
+
+    def from_document(self, doc):
+        """
+        internalizes values from a dictionary (structure as per as_document)
+        """
+        from model.label import Label # XXX: coupling!
+
+        self._id = doc.get('_id')
+        for _type in ('pref', 'alt'):
+            labels = doc.get('labels', {}).get(_type, [])
+            setattr(self, "%s_labels" % _type, [Label('').from_document(label)
+                    for label in labels])
+        return self

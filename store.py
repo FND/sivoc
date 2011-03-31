@@ -7,9 +7,11 @@ from model.label import Label
 STORE = None # populated below
 
 
-class Store(object):
+class Store(object): # XXX: use MongoKit or MongoEngine instead?
     """
     MongoDB persistence wrapper
+
+    document-object mapping is delegated to individual entities
     """
 
     collections = {
@@ -23,21 +25,16 @@ class Store(object):
         if collection not in self.collections.values():
             raise ValueError('invalid collection')
 
-        results = []
-        # XXX: hard-coding concepts (with nested labels) for now
-        for concept in getattr(self.db, collection).find(query):
-            pref_labels = [Label(label['name'], label.get('lang'))
-                    for label in concept['labels']['pref']]
-            alt_labels = [Label(label['name'], label.get('lang'))
-                    for label in concept['labels']['alt']]
-            yield Concept(str(concept['_id']), pref_labels, alt_labels)
+        # XXX: hard-coding concepts for now
+        return (Concept().from_document(doc)
+                for doc in getattr(self.db, collection).find(query))
 
     def add(self, entity):
         """
         add entity to the corresponding collection
         """
         collection = self.collections[entity.__class__.__name__]
-        _id = getattr(self.db, collection, None).insert(entity.data())
+        _id = getattr(self.db, collection, None).insert(entity.as_document())
         entity._id = _id
         return _id
 
@@ -47,12 +44,10 @@ def _seed():
 
     print 'INFO: seeding database' # TODO: use logger
     with open('data.json') as fp:
-        for concept in json.load(fp):
-            pref_label = Label(concept['pref']['name'], concept['pref']['lang'])
-            alt_labels = [Label(label['name'], label['lang'])
-                    for label in concept['alt']]
-            concept = Concept(pref_labels=[pref_label], alt_labels=alt_labels)
+        for doc in json.load(fp):
+            concept = Concept().from_document(doc)
             STORE.add(concept)
+            print concept._id, concept
 
 
 # XXX: does not belong into this module
