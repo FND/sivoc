@@ -1,3 +1,9 @@
+Sivoc is a web application for simple vocabulary management.
+
+It is an exploratory and educational effort using WSGI and MongoDB, and as such
+not designed for actual use.
+
+
 Dependencies
 ============
 
