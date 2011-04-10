@@ -1,4 +1,4 @@
-from templates import ENV
+from templates import render
 
 
 def list_concepts(concepts):
@@ -11,20 +11,15 @@ def list_concepts(concepts):
 
     concepts_data = (template_data(concept) for concept in concepts) # XXX: unnecessarily complex?
 
-    return _render('list_concepts.html', title='Concepts',
+    return render('list_concepts.html', title='Concepts',
             concepts=concepts_data, root_uri='/') # XXX: root_uri hardcoded; breaks encapsulation
 
 
 def list_labels(labels):
-    return _render('list_labels.html', title='Labels', labels=labels,
+    return render('list_labels.html', title='Labels', labels=labels,
             root_uri='/') # XXX: root_uri hardcoded; breaks encapsulation
 
 
 def show_concept(concept): # TODO: i18n
-    return _render('show_concept.html', title=concept.label(), concept=concept,
+    return render('show_concept.html', title=concept.label(), concept=concept,
             concepts_uri='/concepts') # XXX: concepts_uri hardcoded; breaks encapsulation
-
-
-def _render(template, **kwargs):
-    template = ENV.get_template(template)
-    return template.generate(**kwargs)
