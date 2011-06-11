@@ -10,7 +10,7 @@ from web.middleware import Negotiator, HTTPExceptor, UTF8_Encoder
 from config import CONFIG
 
 
-mapfile = '%s/uris.map' % os.path.dirname(__file__) # XXX: use pkg_resources.resource_filename (cf. tiddlyweb.config:URLS_MAP)
+mapfile = os.path.join(os.path.dirname(__file__), 'uris.map')  # XXX: use pkg_resources.resource_filename (cf. tiddlyweb.config:URLS_MAP)
 app = Selector(mapfile=mapfile)
 app = Negotiator(app, CONFIG['serializations'].keys())
 app = HTTPExceptor(app)
