@@ -3,7 +3,7 @@ import mimeparse
 from http import HTTP, HTTPException
 
 
-class Negotiate(object):
+class Negotiator(object):
     """
     extend WSGI environment with information from simple content negotiation
     """
@@ -31,7 +31,7 @@ class Negotiate(object):
 
 class HTTPExceptor(object):
     """
-    extend WSGI environment with information from simple content negotiation
+    WSGI middleware handling HTTP errors
     """
 
     def __init__(self, app):
